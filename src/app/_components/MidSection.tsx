@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { CreatePost } from "@/components/custom/CreatePost";
+import { Card } from "@/components/ui/card";
 import { Post } from "@/components/custom/Post";
-import { avatars } from "@/lib/data/images";
 
 type Media = {
   type: "image" | "video" | "pdf";
@@ -47,13 +47,13 @@ type PostData = {
   isBookmarked: boolean;
 };
 
-export default function page() {
+export function MidSection() {
   const [posts, setPosts] = useState<PostData[]>([
     {
       id: "1",
       user: {
         name: "Jane Cooper",
-        avatar: avatars[0],
+        avatar: "/user-1.jpg",
         handle: "janecooper",
       },
       content:
@@ -70,7 +70,7 @@ export default function page() {
           id: "c1",
           user: {
             name: "Alex Morgan",
-            avatar: avatars[1],
+            avatar: "/user-2.jpg",
             handle: "alexmorgan",
           },
           text: "Amazing view! Where was this taken?",
@@ -88,7 +88,7 @@ export default function page() {
       id: "2",
       user: {
         name: "Alex Morgan",
-        avatar: avatars[1],
+        avatar: "/user-2.jpg",
         handle: "alexmorgan",
       },
       content:
@@ -104,7 +104,7 @@ export default function page() {
       id: "3",
       user: {
         name: "Sam Wilson",
-        avatar: avatars[2],
+        avatar: "/user-3.jpg",
         handle: "samwilson",
       },
       content:
@@ -121,7 +121,7 @@ export default function page() {
           id: "c2",
           user: {
             name: "Jane Cooper",
-            avatar: avatars[0],
+            avatar: "/user-1.jpg",
             handle: "janecooper",
           },
           text: "Looks delicious! Can you share the recipe?",
@@ -133,7 +133,7 @@ export default function page() {
           id: "c3",
           user: {
             name: "Taylor Swift",
-            avatar: avatars[3],
+            avatar: "/user-4.jpg",
             handle: "taylorswift",
           },
           text: "I made this last week! So good!",
