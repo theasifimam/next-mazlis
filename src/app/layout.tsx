@@ -20,19 +20,20 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const isAuthenticated = true;
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system">
           <div className="flex flex-col min-h-screen justify-center items-center">
-            <TopNavBar />
+            {isAuthenticated && <TopNavBar />}
             <div className="flex justify-center flex-1 max-w-[1200px]">
               {/* Client-side check for chat page */}
               <NavigationEvents>
-                <ConditionalLeftSection />
+                {isAuthenticated && <ConditionalLeftSection />}
                 {children}
               </NavigationEvents>
-              <RightSection />
+              {isAuthenticated && <RightSection />}
             </div>
           </div>
         </ThemeProvider>

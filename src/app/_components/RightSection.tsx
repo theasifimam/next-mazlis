@@ -63,7 +63,7 @@ export function RightSection() {
       </div>
 
       {/* Who to follow */}
-      <Card className="p-4">
+      <Card className="p-4 ">
         <div className="flex items-center gap-2">
           <Users className="h-5 w-5 text-primary" />
           <h3 className="font-medium">Who to follow</h3>

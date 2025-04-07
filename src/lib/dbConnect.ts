@@ -1,7 +1,7 @@
 // lib/dbConnect.ts
 import mongoose, { Mongoose } from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI: string | undefined = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
     throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
@@ -28,8 +28,7 @@ async function dbConnect(): Promise<Mongoose> {
             bufferCommands: false,
         };
 
-        cached.promise = mongoose.connect("mongodb://0.0.0.0:27017/mazlis", opts).then((mongoose) => {
-            console.log("connected to db")
+        cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
             return mongoose;
         });
     }

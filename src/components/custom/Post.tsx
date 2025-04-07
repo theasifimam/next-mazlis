@@ -18,10 +18,9 @@ import {
   Share2,
   MoreHorizontal,
   FileText,
-  BarChart2,
   Send,
   Bookmark,
-  ChevronDown,
+  Share,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -335,9 +334,9 @@ export function Post({
 
       {/* Share Modal */}
       <Dialog open={showShareModal} onOpenChange={setShowShareModal}>
-        <DialogContent className="rounded-xl sm:max-w-md p-0 overflow-hidden">
+        <DialogContent className="rounded-3xl sm:max-w-md p-0 overflow-hidden">
           <DialogHeader className="p-4 border-b">
-            <DialogTitle className="text-left">Share this post</DialogTitle>
+            <DialogTitle className="text-left">Share</DialogTitle>
           </DialogHeader>
           <div className="p-4">
             <Input
@@ -380,12 +379,8 @@ export function Post({
                         @{user.handle}
                       </p>
                     </div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="rounded-full h-8 px-3 text-xs"
-                    >
-                      Send
+                    <Button size="sm" className="rounded-full h-8 px-3 text-xs">
+                      <Share className="w-10 h-10" />
                     </Button>
                   </div>
                 ))}

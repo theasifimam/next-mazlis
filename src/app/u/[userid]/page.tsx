@@ -8,8 +8,6 @@ import {
   MessageSquare,
   Settings,
   Link as LinkIcon,
-  PenTool,
-  LayoutGrid,
   Grid3X3,
   Clapperboard,
 } from "lucide-react";
@@ -17,9 +15,11 @@ import { Card } from "@/components/ui/card";
 import { Tabs } from "@radix-ui/react-tabs";
 import { TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { avatars, pics } from "@/lib/data/images";
+import { useState } from "react";
 
 export default function ProfilePage() {
-  const isCurrentUser = false;
+  const [isFollowing, setIsFollowing] = useState(false);
+  const isCurrentUser = true;
   const user = {
     username: "asifimam",
     name: "Saifi Imam",
@@ -103,7 +103,13 @@ export default function ProfilePage() {
                 Settings
               </Button>
             ) : (
-              <Button className="gap-2 px-6">Connect</Button>
+              <Button
+                variant={isFollowing ? "outline" : "default"}
+                className="gap-2 px-6"
+                onClick={() => setIsFollowing(!isFollowing)}
+              >
+                {isFollowing ? "Unfollow" : "Follow"}
+              </Button>
             )}
           </div>
         </div>

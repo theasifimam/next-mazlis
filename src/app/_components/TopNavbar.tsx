@@ -33,8 +33,8 @@ export function TopNavBar() {
     },
     {
       icon: <MessageSquare className="h-5 w-5" />,
-      label: "Chat",
-      href: "/chat",
+      label: "Chats",
+      href: "/chats",
     },
     {
       icon: <SearchSlash className="h-5 w-5" />,
@@ -49,7 +49,7 @@ export function TopNavBar() {
         {/* Logo - Left */}
         <div className="flex items-center gap-2 w-64">
           <Telescope className="h-6 w-6 text-primary" />
-          <h1 className="font-bold text-lg">Nexus</h1>
+          <h1 className="font-bold text-lg">Mazlis</h1>
         </div>
 
         {/* Centered Navigation */}
