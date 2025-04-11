@@ -22,7 +22,7 @@ export default function Layout({ children }: LayoutProps) {
           <div className="flex items-center gap-3">
             <Telescope className="h-7 w-7 lg:h-8 lg:w-8 text-foreground" />
             <span className="text-lg lg:text-xl font-medium tracking-tight">
-              MAZLIS
+              Mazlis
             </span>
           </div>
 

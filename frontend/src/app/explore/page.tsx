@@ -3,8 +3,8 @@
 
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Search, Sparkles, Sliders } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
+import { Search, Sliders } from "lucide-react";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { avatars, pics } from "@/lib/data/images";
 import { vids } from "@/lib/data/videos";
+import Image from "next/image";
 
 export default function ExplorePage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -336,7 +337,7 @@ export default function ExplorePage() {
             onClick={() => setSelectedPost(post)}
           >
             {post.media.type === "image" ? (
-              <img
+              <Image
                 src={post.media.url}
                 alt="Explore content"
                 className="w-full rounded-lg object-cover cursor-pointer transition-transform hover:scale-95"
@@ -373,7 +374,7 @@ export default function ExplorePage() {
               {/* Media Section */}
               <div className="md:w-2/3 bg-black flex items-center justify-center">
                 {selectedPost.media.type === "image" ? (
-                  <img
+                  <Image
                     src={selectedPost.media.url}
                     alt="Post content"
                     className="w-full h-auto max-h-[80vh] object-contain"
@@ -415,7 +416,7 @@ export default function ExplorePage() {
                 <div className="flex-1 overflow-y-auto">
                   <p className="mb-4">{selectedPost.caption}</p>
                   <div className="flex flex-wrap gap-1 mb-4">
-                    {selectedPost.tags.map((tag) => (
+                    {selectedPost.tags.map((tag: string) => (
                       <span key={tag} className="text-primary text-sm">
                         #{tag}
                       </span>

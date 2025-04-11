@@ -20,7 +20,6 @@ import {
   Settings,
   Search,
 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import {
@@ -30,6 +29,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { avatars, pics } from "@/lib/data/images";
+import Image from "next/image";
 
 type Notification = {
   id: string;
@@ -260,11 +260,19 @@ export default function NotificationsPage() {
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-4 sm:grid-cols-6">
-          <TabsTrigger value="all">All</TabsTrigger>
-          <TabsTrigger value="unread">Unread</TabsTrigger>
-          <TabsTrigger value="like">Likes</TabsTrigger>
-          <TabsTrigger value="comment">Comments</TabsTrigger>
-          <TabsTrigger value="follow" className="hidden sm:block">
+          <TabsTrigger className="rounded-3xl" value="all">
+            All
+          </TabsTrigger>
+          <TabsTrigger className="rounded-3xl" value="unread">
+            Unread
+          </TabsTrigger>
+          <TabsTrigger className="rounded-3xl" value="like">
+            Likes
+          </TabsTrigger>
+          <TabsTrigger className="rounded-3xl" value="comment">
+            Comments
+          </TabsTrigger>
+          <TabsTrigger value="follow" className="hidden sm:block rounded-3xl">
             Follows
           </TabsTrigger>
           <TabsTrigger value="mention" className="hidden sm:block">
@@ -333,31 +341,35 @@ export default function NotificationsPage() {
                   </div>
                 </div>
 
-                <p className="mt-1">
-                  <span>{notification.content}</span>
-                  {notification.target && (
-                    <span className="font-medium">
-                      {" "}
-                      "{notification.target}"
-                    </span>
-                  )}
-                </p>
+                <div className="flex justify-between">
+                  <div className="flex-col">
+                    <p className="mt-1">
+                      <span>{notification.content}</span>
+                      {notification.target && (
+                        <span className="font-medium">
+                          {" "}
+                          "{notification.target}"
+                        </span>
+                      )}
+                    </p>
 
-                {notification.meta?.commentText && (
-                  <Card className="mt-2 p-3 bg-muted/50 text-sm">
-                    {notification.meta.commentText}
-                  </Card>
-                )}
-
-                {notification.meta?.postImage && (
-                  <div className="mt-2 w-20 h-20 rounded-md overflow-hidden">
-                    <img
-                      src={notification.meta.postImage}
-                      alt="Post preview"
-                      className="w-full h-full object-cover"
-                    />
+                    {notification.meta?.commentText && (
+                      <div className="mt-2 p-3 bg-muted/50 text-sm">
+                        {notification.meta.commentText}
+                      </div>
+                    )}
                   </div>
-                )}
+
+                  {notification.meta?.postImage && (
+                    <div className="mt-2 w-20 h-20 rounded-md overflow-hidden">
+                      <Image
+                        src={notification.meta.postImage}
+                        alt="Post preview"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
             </Card>
           ))

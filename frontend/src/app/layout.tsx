@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { TopNavBar } from "./_components/TopNavbar";
-import { LeftSection } from "./_components/LeftSection";
 import { RightSection } from "./_components/RightSection";
 import { NavigationEvents } from "./_components/NavigationEvents";
 import ConditionalLeftSection from "./_components/ConditionalLeftSection";

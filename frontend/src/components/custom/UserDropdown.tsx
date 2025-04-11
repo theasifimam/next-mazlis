@@ -45,21 +45,29 @@ const UserDropdown = () => {
 
         {/* Main Options */}
         <DropdownMenuGroup>
-          <DropdownMenuItem className="p-2 rounded-3xl text-gray-600">
-            <User className="mr-1 h-5 w-5" />
-            <span className="text-sm">Profile</span>
+          <DropdownMenuItem className="p-2 rounded-3xl text-gray-600 hover:bg-muted">
+            <Link className="flex items-center" href="/u/asifimam">
+              <User className="mr-1 h-5 w-5" />
+              <span className="text-sm">Profile</span>
+            </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem className="p-2 rounded-3xl text-gray-600">
-            <Settings className="mr-1 h-5 w-5" />
-            <span className="text-sm">Settings</span>
+          <DropdownMenuItem className="p-2 rounded-3xl text-gray-600 hover:bg-muted">
+            <Link className="flex items-center" href="/settings">
+              <Settings className="mr-1 h-5 w-5" />
+              <span className="text-sm">Settings</span>
+            </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem className="p-2 rounded-3xl text-gray-600">
-            <Lock className="mr-1 h-5 w-5" />
-            <span className="text-sm">Security</span>
+          <DropdownMenuItem className="p-2 rounded-3xl text-gray-600 hover:bg-muted">
+            <Link className="flex items-center" href="/security">
+              <Lock className="mr-1 h-5 w-5" />
+              <span className="text-sm">Security</span>
+            </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem className="p-2 rounded-3xl text-gray-600">
-            <HelpCircle className="mr-1 h-5 w-5" />
-            <span className="text-sm">Help</span>
+          <DropdownMenuItem className="p-2 rounded-3xl text-gray-600 hover:bg-muted">
+            <Link className="flex items-center" href="/help">
+              <HelpCircle className="mr-1 h-5 w-5" />
+              <span className="text-sm">Help</span>
+            </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
