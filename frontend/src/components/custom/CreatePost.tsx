@@ -78,7 +78,7 @@ export function CreatePost() {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-4 mb-4">
+    <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-sm border border-gray-200 dark:border-gray-800 p-4 mb-4">
       <div className="flex gap-3 mb-3">
         <Avatar>
           <AvatarImage src="https://img.freepik.com/free-vector/young-man-with-glasses-illustration_1308-174706.jpg?t=st=1743313467~exp=1743317067~hmac=600f8b3e9729539ee6c7d141e5bd520eee15f4cee87b181d8c669b05dcdf03c5&w=740" />

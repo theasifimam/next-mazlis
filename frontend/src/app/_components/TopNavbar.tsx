@@ -7,12 +7,9 @@ import {
   Home,
   Clapperboard,
   MessageSquare,
-  Bookmark,
   Search,
   Plus,
-  Bell,
   Telescope,
-  UserCogIcon,
   SearchSlash,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";

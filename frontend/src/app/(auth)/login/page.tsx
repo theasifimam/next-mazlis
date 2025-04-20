@@ -14,7 +14,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md space-y-4">
         <div className="text-center">
           <Telescope className="mx-auto h-10 w-10 text-primary" />
-          <h1 className="mt-4 text-2xl font-bold">Welcome to Nexus</h1>
+          <h1 className="mt-4 text-2xl font-bold">Welcome to Mazlis</h1>
           <p className="mt-2 text-muted-foreground">
             Connect with friends and share your world
           </p>

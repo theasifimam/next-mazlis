@@ -28,6 +28,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Link from "next/link";
 
 type Media = {
   type: "image" | "video" | "pdf";
@@ -73,7 +74,6 @@ type PostProps = {
 };
 
 export function Post({
-  id,
   user,
   content,
   media,
@@ -133,12 +133,12 @@ export function Post({
               {user.name.charAt(0)}
             </AvatarFallback>
           </Avatar>
-          <div>
+          <Link href={`/u/${user.handle}`}>
             <p className="font-medium text-sm">{user.name}</p>
             <p className="text-xs text-muted-foreground">
               @{user.handle} · {timestamp}
             </p>
-          </div>
+          </Link>
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

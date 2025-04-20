@@ -16,6 +16,7 @@ import { Tabs } from "@radix-ui/react-tabs";
 import { TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { avatars, pics } from "@/lib/data/images";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function ProfilePage() {
   const [isFollowing, setIsFollowing] = useState(false);
@@ -135,13 +136,18 @@ export default function ProfilePage() {
         <TabsContent value="posts">
           <div className="grid grid-cols-3 gap-1 mt-4">
             {posts.map((post, index) => (
-              <Card key={index} className="aspect-square overflow-hidden">
-                <img
-                  src={post}
-                  alt={`Post ${index + 1}`}
-                  className="w-full h-full object-cover hover:opacity-90 transition-opacity cursor-pointer"
-                />
-              </Card>
+              <Link key={index} href={`/u/${user.username}/post/${index}`}>
+                <Card className="aspect-square overflow-hidden relative">
+                  <div className="absolute inset-0 w-full h-full">
+                    <img
+                      src={post}
+                      alt={`Post ${index + 1}`}
+                      className="w-full h-full object-cover hover:opacity-90 transition-opacity cursor-pointer"
+                      loading="lazy"
+                    />
+                  </div>
+                </Card>
+              </Link>
             ))}
           </div>
         </TabsContent>
