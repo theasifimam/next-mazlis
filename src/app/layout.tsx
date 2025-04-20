@@ -19,7 +19,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const isAuthenticated = false;
+  const isAuthenticated = true;
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
