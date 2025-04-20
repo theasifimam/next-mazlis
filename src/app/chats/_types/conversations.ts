@@ -7,7 +7,7 @@ export interface Customer {
 }
 
 export interface Message {
-  isNew: any;
+  isNew: boolean;
   id: number;
   sender: string;
   text: string;

@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Bell,
   BellOff,
@@ -53,8 +53,7 @@ export default function NotificationsPage() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [activeTab, setActiveTab] = useState("all");
   const [muteAll, setMuteAll] = useState(false);
-  const [selectedNotification, setSelectedNotification] =
-    useState<Notification | null>(null);
+  const [] = useState<Notification | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
 
   // Mock data - in a real app, this would come from an API
@@ -348,7 +347,7 @@ export default function NotificationsPage() {
                       {notification.target && (
                         <span className="font-medium">
                           {" "}
-                          "{notification.target}"
+                          &quot;{notification.target}&quot;
                         </span>
                       )}
                     </p>

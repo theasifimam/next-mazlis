@@ -23,9 +23,9 @@ export default function PostDetailPage({
     content: "This is a sample post content that would be displayed in detail.",
     media: [
       {
-        type: "image",
+        type: "image" as "image" | "video" | "pdf",
         url: pics[postId],
-        aspectRatio: "square",
+        aspectRatio: "square" as const,
       },
     ],
     likes: 42,
@@ -62,7 +62,16 @@ export default function PostDetailPage({
         </h3>
 
         {postsData.map((p, index) => (
-          <Post {...p} key={index} />
+          <Post
+            {...{
+              ...p,
+              media: (p.media ?? []).map((m) => ({
+                ...m,
+                type: m.type as "image" | "video" | "pdf",
+              })),
+            }}
+            key={index}
+          />
         ))}
       </div>
     </div>

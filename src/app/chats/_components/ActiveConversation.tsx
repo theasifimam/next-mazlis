@@ -120,7 +120,7 @@ export default function ActiveConversation({
         <CardContent className="flex-1 overflow-y-auto p-2 space-y-1.5 bg-gradient-to-b from-muted/10 to-background">
           <div className="w-full text-center mb-4">
             <span className="inline-block px-3 py-1 text-xs text-muted-foreground bg-muted rounded-full">
-              Conversation started {conversation.messages[0]?.time || "today"}
+              Conversation started {conversation.messages?.[0]?.time ?? "today"}
             </span>
           </div>
 
@@ -131,8 +131,9 @@ export default function ActiveConversation({
                 message={message}
                 isAdmin={message.sender === "admin"}
                 showTime={
-                  index === conversation.messages.length - 1 ||
-                  conversation.messages[index + 1]?.sender !== message.sender
+                  index === (conversation.messages ?? []).length - 1 ||
+                  (conversation.messages ?? [])[index + 1]?.sender !==
+                    message.sender
                 }
               />
             ))
@@ -141,8 +142,8 @@ export default function ActiveConversation({
               <div className="rounded-full bg-muted p-3">
                 <MessageBubble
                   className="h-10 w-10"
-                  message={undefined}
                   isAdmin={false}
+                  message={undefined}
                 />
               </div>
               <p>No messages yet</p>

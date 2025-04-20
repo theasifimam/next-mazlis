@@ -152,7 +152,7 @@ export default function SettingsPage() {
                   <div className="space-y-1">
                     <Label>Show Activity Status</Label>
                     <p className="text-sm text-muted-foreground">
-                      Show when you're active on the app
+                      Show when you&apos;re active on the app
                     </p>
                   </div>
                   <Switch defaultChecked />
@@ -198,7 +198,7 @@ export default function SettingsPage() {
                 <h3 className="font-medium">Blocked Users</h3>
                 <div className="rounded-md border p-4">
                   <p className="text-sm text-muted-foreground">
-                    You haven't blocked any users yet.
+                    You haven&apos;t blocked any users yet.
                   </p>
                 </div>
               </div>

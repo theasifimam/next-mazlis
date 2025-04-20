@@ -7,7 +7,6 @@ import {
   MessageSquare,
   Share2,
   Bookmark,
-  MoreHorizontal,
   Volume2,
   VolumeX,
 } from "lucide-react";
@@ -264,7 +263,9 @@ export default function ReelsPage() {
           >
             {/* Video */}
             <video
-              ref={(el: HTMLVideoElement) => (videoRefs.current[index] = el)}
+              ref={(el: HTMLVideoElement | null) => {
+                videoRefs.current[index] = el;
+              }}
               src={reel.videoUrl}
               className="h-full w-full object-cover"
               loop

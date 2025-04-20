@@ -17,14 +17,16 @@ import {
 import { avatars, pics } from "@/lib/data/images";
 import { vids } from "@/lib/data/videos";
 import Image from "next/image";
+import { Post } from "./_types";
 
 export default function ExplorePage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedPost, setSelectedPost] = useState<any>(null);
+
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
   // Sample data - would come from API in real app
 
-  const explorePosts = [
+  const explorePosts: Post[] = [
     {
       id: 1,
       user: {

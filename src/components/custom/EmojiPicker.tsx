@@ -1,7 +1,6 @@
 "use client";
-import { useState } from "react";
+
 import EmojiPicker from "emoji-picker-react";
-import { Smile } from "lucide-react";
 
 export function MyEmojiPicker({ onSelect }: { onSelect: (e: string) => void }) {
   return (

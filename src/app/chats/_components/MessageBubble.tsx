@@ -6,7 +6,7 @@ import { CheckCheck, Clock } from "lucide-react";
 import { useMemo } from "react";
 
 interface MessageBubbleProps {
-  message: Message;
+  message?: Message;
   isAdmin: boolean;
   showTime?: boolean;
   className?: string;
@@ -19,7 +19,7 @@ export default function MessageBubble({
   className,
 }: MessageBubbleProps) {
   const getBorderRadius = () => {
-    switch (message.groupPosition) {
+    switch (message?.groupPosition) {
       case "single":
         return isAdmin
           ? "rounded-se-none rounded-2xl"
@@ -45,14 +45,14 @@ export default function MessageBubble({
 
   const statusIndicator = useMemo(() => {
     if (!isAdmin) return null;
-    if (message.status === "delivered") {
+    if (message?.status === "delivered") {
       return <CheckCheck className="h-2.5 w-2.5 text-primary-foreground/60" />;
     }
-    if (message.status === "read") {
+    if (message?.status === "read") {
       return <CheckCheck className="h-2.5 w-2.5 text-blue-400" />;
     }
     return <Clock className="h-2.5 w-2.5 text-primary-foreground/60" />;
-  }, [isAdmin, message.status]);
+  }, [isAdmin, message?.status]);
 
   return (
     <div
@@ -61,7 +61,7 @@ export default function MessageBubble({
         isAdmin ? "justify-end" : "justify-start",
         className,
         // Ultra-tight spacing between grouped messages
-        message.groupPosition === "middle" || message.groupPosition === "last"
+        message?.groupPosition === "middle" || message?.groupPosition === "last"
           ? "-mt-[5px]"
           : "mt-1"
       )}
@@ -74,12 +74,12 @@ export default function MessageBubble({
             : "bg-muted text-muted-foreground",
           getBorderRadius(),
           {
-            "animate-in fade-in slide-in-from-bottom-1": message.isNew,
+            "animate-in fade-in slide-in-from-bottom-1": message?.isNew,
           }
         )}
       >
         <p className="whitespace-pre-wrap break-words text-sm leading-snug">
-          {message.text}
+          {message?.text}
         </p>
 
         {(showTime || statusIndicator) && (
@@ -90,7 +90,7 @@ export default function MessageBubble({
                 isAdmin ? "text-primary-foreground/80" : "text-muted-foreground"
               )}
             >
-              {message.time}
+              {message?.time}
             </p>
             {statusIndicator}
           </div>
