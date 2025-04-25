@@ -26,7 +26,7 @@ export default function SettingsPage() {
     <div className="max-w-4xl container py-8">
       <h1 className="text-3xl font-bold mb-6">Settings</h1>
 
-      <Tabs defaultValue="account" className="w-full">
+      <Tabs defaultValue="account">
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger className="rounded-3xl" value="account">
             Account
