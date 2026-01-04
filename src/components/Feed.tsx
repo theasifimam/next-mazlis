@@ -2,10 +2,9 @@
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { StoryItem } from "./StoryItem";
 import { PostCreator } from "./PostCreator";
-import { PostCard } from "./PostCard";
+import { PostCard } from "./post/PostCard";
 import { useState } from "react";
 import { StoryViewer } from "./StoryViewer";
 
@@ -32,12 +31,13 @@ export function Feed() {
       setActiveStoryId(DUMMY_STORIES[currentIndex - 1].id);
     }
   };
+
   return (
-    <div className="flex flex-col h-full w-full">
-      {/* 1. Fixed Header */}
-      <header className="flex-none z-50 w-full border-b border-white/5 bg-black/60 backdrop-blur-xl">
+    <div className="flex flex-col h-full w-full bg-background text-foreground transition-colors duration-300">
+      {/* 1. Fixed Header - Removed bg-black/60, added bg-background/60 */}
+      <header className="flex-none z-50 w-full border-b border-border bg-background/60 backdrop-blur-xl">
         <div className="flex items-center justify-between px-4 py-3">
-          <h2 className="text-xl font-bold tracking-tight">Nexus</h2>
+          <h2 className="text-xl font-bold tracking-tight">Mazlis</h2>
           <Badge
             variant="outline"
             className="bg-green-500/10 text-green-500 border-green-500/20 gap-1 px-2 py-0.5"
@@ -46,34 +46,20 @@ export function Feed() {
             Live
           </Badge>
         </div>
-        <Tabs defaultValue="for-you" className="w-full">
-          <TabsList className="w-full justify-start bg-transparent dark:text-white h-12 rounded-none p-0 border-b border-white/5">
-            <TabsTrigger
-              value="for-you"
-              className="flex-1 h-full rounded-none dark:text-white"
-            >
-              <span className="flex items-center dark:text-white gap-1">
-                For you
-              </span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="following"
-              className="flex-1 h-full rounded-none dark:text-white"
-            >
-              Following
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
       </header>
 
       {/* 2. Scrollable Content */}
       <ScrollArea className="flex-1 w-full h-full">
         <div className="flex flex-col">
-          {/* Horizontal Stories */}
-          <section className="p-4 border-b border-white/5 overflow-x-auto no-scrollbar">
+          {/* Horizontal Stories - Replaced border-white/5 with border-border */}
+          <section className="p-4 border-b border-border overflow-x-auto no-scrollbar bg-card/30">
             <div className="flex gap-5 min-w-max">
               {DUMMY_STORIES.map((s) => (
-                <div key={s.id} onClick={() => setActiveStoryId(s.id)}>
+                <div
+                  key={s.id}
+                  onClick={() => setActiveStoryId(s.id)}
+                  className="cursor-pointer transition-transform hover:scale-105"
+                >
                   <StoryItem id={s.id} username={s.username} />
                 </div>
               ))}
@@ -88,7 +74,7 @@ export function Feed() {
             onPrev={handlePrev}
           />
           <PostCreator />
-          <section className="flex flex-col">
+          <section className="flex flex-col divide-y divide-border">
             {[1, 2, 3, 4, 5].map((post) => (
               <PostCard key={post} id={post} />
             ))}

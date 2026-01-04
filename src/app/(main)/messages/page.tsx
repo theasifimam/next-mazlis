@@ -1,104 +1,181 @@
 "use client";
 
-import Link from "next/link";
-import { Search, Edit3, ChevronRight } from "lucide-react";
+import React from "react";
+import {
+  ChevronLeft,
+  MoreVertical,
+  Plus,
+  Smile,
+  SendHorizontal,
+  Image as ImageIcon,
+  Phone,
+  Video,
+} from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
-const CONVERSATIONS = [
+// 1. Types for Chat
+interface Message {
+  id: string;
+  senderId: string;
+  text: string;
+  time: string;
+  isMe: boolean;
+}
+
+const MOCK_MESSAGES: Message[] = [
   {
     id: "1",
-    name: "Sarah Tech",
-    lastMsg: "Did you see the new update?",
-    time: "2m",
-    online: true,
-    unread: 2,
+    senderId: "user",
+    text: "Hey! Did you finish the spatial UI prototype?",
+    time: "10:00 AM",
+    isMe: false,
   },
   {
     id: "2",
-    name: "Design Studio",
-    lastMsg: "The prototype looks amazing!",
-    time: "1h",
-    online: false,
-    unread: 0,
+    senderId: "me",
+    text: "Almost! Just tweaking the glassmorphism effects on the sidebar.",
+    time: "10:02 AM",
+    isMe: true,
   },
   {
     id: "3",
-    name: "Alex Rivera",
-    lastMsg: "Let's catch up later today.",
-    time: "3h",
-    online: true,
-    unread: 0,
+    senderId: "user",
+    text: "Nice. The client really wants that 'Nexus' feel for the launch. ✨",
+    time: "10:05 AM",
+    isMe: false,
+  },
+  {
+    id: "4",
+    senderId: "me",
+    text: "Definitely. I'm using the new semantic color tokens we discussed.",
+    time: "10:06 AM",
+    isMe: true,
   },
 ];
 
-export default function MessagesListPage() {
+export default function MessageDetailPage(): React.ReactElement {
   return (
-    <div className="flex flex-col h-full w-full bg-black/10">
-      <div className="p-6 space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold tracking-tight">Messages</h2>
-          <button className="p-2.5 bg-indigo-600/10 hover:bg-indigo-600/20 rounded-xl text-indigo-400 transition-all">
-            <Edit3 size={20} />
+    <div className="flex flex-col h-full w-full bg-background transition-colors duration-300">
+      {/* 1. Header: Contact Info & Actions */}
+      <header className="flex-none p-4 flex items-center justify-between border-b border-border bg-background/60 backdrop-blur-xl z-20">
+        <div className="flex items-center gap-3">
+          <button className="p-2 hover:bg-secondary rounded-xl text-muted-foreground transition-colors md:hidden">
+            <ChevronLeft size={20} />
+          </button>
+
+          <div className="relative">
+            <Avatar className="h-10 w-10 rounded-xl border border-border shadow-sm">
+              <AvatarImage
+                src="https://i.pravatar.cc/150?u=1"
+                alt="Sarah Tech"
+              />
+              <AvatarFallback className="bg-primary text-primary-foreground font-bold">
+                S
+              </AvatarFallback>
+            </Avatar>
+            <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 border-2 border-background rounded-full" />
+          </div>
+
+          <div className="flex flex-col">
+            <span className="text-sm font-black text-foreground tracking-tight italic">
+              Sarah Tech
+            </span>
+            <span className="text-[10px] text-emerald-500 font-bold uppercase tracking-widest">
+              Online
+            </span>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-1 md:gap-3">
+          <button className="hidden md:flex p-2.5 hover:bg-secondary rounded-xl text-muted-foreground transition-all">
+            <Phone size={18} />
+          </button>
+          <button className="hidden md:flex p-2.5 hover:bg-secondary rounded-xl text-muted-foreground transition-all">
+            <Video size={18} />
+          </button>
+          <button className="p-2.5 hover:bg-secondary rounded-xl text-muted-foreground transition-all">
+            <MoreVertical size={18} />
           </button>
         </div>
+      </header>
 
-        <div className="relative group">
-          <Search
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-indigo-400 transition-colors"
-            size={18}
-          />
-          <input
-            type="text"
-            placeholder="Search conversations..."
-            className="w-full bg-white/5 border border-white/5 rounded-2xl py-3.5 pl-12 pr-4 outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all text-sm"
-          />
-        </div>
-      </div>
+      {/* 2. Chat Area */}
+      <ScrollArea className="flex-1 p-4 md:p-6">
+        <div className="flex flex-col gap-6">
+          <div className="flex justify-center">
+            <span className="bg-secondary/50 text-muted-foreground text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full border border-border/50">
+              Today
+            </span>
+          </div>
 
-      <ScrollArea className="flex-1 px-4">
-        <div className="space-y-2 pb-20">
-          {CONVERSATIONS.map((chat) => (
-            <Link
-              key={chat.id}
-              href={`/messages/${chat.id}`}
-              className="flex items-center gap-4 p-4 rounded-[24px] hover:bg-white/[0.05] border border-transparent hover:border-white/5 transition-all group"
+          {MOCK_MESSAGES.map((msg) => (
+            <div
+              key={msg.id}
+              className={cn(
+                "flex w-full max-w-[85%] md:max-w-[70%]",
+                msg.isMe ? "ml-auto justify-end" : "justify-start"
+              )}
             >
-              <div className="relative">
-                <Avatar className="w-14 h-14 rounded-2xl border border-white/5">
-                  <AvatarImage src={`https://i.pravatar.cc/150?u=${chat.id}`} />
-                </Avatar>
-                {chat.online && (
-                  <span className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-[3px] border-[#09090b] rounded-full" />
+              <div
+                className={cn(
+                  "relative group px-5 py-3.5 rounded-[28px] shadow-sm transition-all",
+                  msg.isMe
+                    ? "bg-primary text-primary-foreground rounded-tr-lg"
+                    : "bg-secondary/80 text-foreground border border-border rounded-tl-lg"
                 )}
-              </div>
-
-              <div className="flex-1 min-w-0">
-                <div className="flex justify-between items-center mb-1">
-                  <span className="font-bold text-zinc-100">{chat.name}</span>
-                  <span className="text-xs text-zinc-500">{chat.time}</span>
-                </div>
-                <p className="text-sm text-zinc-400 truncate pr-4 font-light leading-relaxed">
-                  {chat.lastMsg}
+              >
+                <p className="text-sm font-medium leading-relaxed">
+                  {msg.text}
                 </p>
+                <span
+                  className={cn(
+                    "absolute bottom-[-20px] text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap",
+                    msg.isMe
+                      ? "right-2 text-muted-foreground"
+                      : "left-2 text-muted-foreground"
+                  )}
+                >
+                  {msg.time}
+                </span>
               </div>
-
-              <div className="flex flex-col items-end gap-2">
-                {chat.unread > 0 && (
-                  <Badge className="bg-indigo-500 hover:bg-indigo-500 h-5 min-w-5 flex items-center justify-center rounded-full text-[10px] p-1">
-                    {chat.unread}
-                  </Badge>
-                )}
-                <ChevronRight
-                  size={16}
-                  className="text-zinc-600 group-hover:text-indigo-400 transition-colors"
-                />
-              </div>
-            </Link>
+            </div>
           ))}
         </div>
+        <div className="h-10" />
       </ScrollArea>
+
+      {/* 3. Input Bar */}
+      <footer className="p-4 bg-background border-t border-border">
+        <div className="max-w-4xl mx-auto flex items-end gap-3">
+          <div className="flex-1 flex items-end gap-2 bg-secondary/50 border border-border rounded-[32px] px-4 py-2 focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+            <button className="p-2 hover:bg-background rounded-full text-muted-foreground transition-colors mb-1">
+              <Plus size={20} />
+            </button>
+            <textarea
+              placeholder="Message Sarah..."
+              rows={1}
+              className="w-full bg-transparent border-none outline-none py-3 text-sm text-foreground placeholder:text-muted-foreground resize-none"
+              onInput={(e) => {
+                const target = e.target as HTMLTextAreaElement;
+                target.style.height = "auto";
+                target.style.height = `${target.scrollHeight}px`;
+              }}
+            />
+            <button className="p-2 hover:bg-background rounded-full text-muted-foreground transition-colors mb-1">
+              <Smile size={20} />
+            </button>
+            <button className="p-2 hover:bg-background rounded-full text-muted-foreground transition-colors mb-1">
+              <ImageIcon size={20} />
+            </button>
+          </div>
+
+          <button className="h-12 w-12 flex items-center justify-center bg-primary text-primary-foreground rounded-full shadow-lg shadow-primary/20 hover:opacity-90 active:scale-95 transition-all">
+            <SendHorizontal size={20} />
+          </button>
+        </div>
+      </footer>
     </div>
   );
 }

@@ -15,12 +15,22 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // const isAuthenticated = true;
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          {children}
+      <body className={`${inter.className} antialiased`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange // Prevents a flash of unstyled content during theme changes
+        >
+          {/* The min-h-screen and bg-background are CRITICAL. 
+              Without these, when you switch to light mode, 
+              the parts of the page without content might stay dark.
+          */}
+          <div className="relative min-h-screen bg-background text-foreground transition-colors duration-300">
+            {children}
+          </div>
         </ThemeProvider>
       </body>
     </html>
