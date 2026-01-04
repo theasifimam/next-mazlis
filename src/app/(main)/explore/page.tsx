@@ -37,7 +37,7 @@ export default function ExplorePage() {
               className="w-full bg-secondary/50 border border-border rounded-2xl py-2.5 pl-12 pr-4 outline-none focus:ring-2 focus:ring-primary/20 focus:bg-secondary transition-all text-sm"
             />
           </div>
-          <button className="p-2.5 hover:bg-secondary rounded-xl transition-colors text-muted-foreground border border-transparent hover:border-border">
+          <button className="p-2.5 hover:bg-secondary transition-colors text-muted-foreground border border-transparent hover:border-border">
             <Settings size={20} />
           </button>
         </div>
@@ -48,7 +48,7 @@ export default function ExplorePage() {
               <TabsTrigger
                 key={tab}
                 value={tab.toLowerCase()}
-                className="bg-transparent p-0 pb-3 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-foreground text-muted-foreground font-bold transition-all"
+                className="bg-transparent border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-foreground text-muted-foreground font-bold transition-all"
               >
                 {tab}
               </TabsTrigger>
