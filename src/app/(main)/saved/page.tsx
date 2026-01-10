@@ -6,9 +6,18 @@ import Image from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
+type Post = {
+  id: number;
+  type: string;
+  title: string;
+  author: string;
+  img: string;
+  size: string;
+};
+
 const SAVED_CATEGORIES = ["All", "Design", "Tech", "Videos", "Inspo"];
 
-const SAVED_POSTS = [
+const SAVED_POSTS: Post[] = [
   {
     id: 1,
     type: "IMG",
@@ -99,7 +108,7 @@ export default function SavedPostsPage() {
       */}
       <main className="flex-1 overflow-y-auto custom-scrollbar">
         <div className="grid grid-cols-2 grid-flow-dense gap-4">
-          {SAVED_POSTS.map((post, idx) => (
+          {SAVED_POSTS.map((post: Post, idx: number) => (
             <motion.div
               key={post.id}
               initial={{ opacity: 0 }}

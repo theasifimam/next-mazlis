@@ -15,7 +15,21 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 
-const NOTIFICATIONS = [
+type Notification = {
+  id: string;
+  type: "mention" | "zap" | "follow" | "like";
+  user: {
+    name: string;
+    handle: string;
+    avatar: string;
+  };
+  content: string;
+  time: string;
+  isUnread: boolean;
+  reference: string;
+};
+
+const NOTIFICATIONS: Notification[] = [
   {
     id: "1",
     type: "mention",
@@ -111,7 +125,7 @@ export default function NotificationPage() {
           {/* 3. NOTIFICATION CARDS (Bento Style) */}
           <section className="space-y-4">
             <AnimatePresence>
-              {NOTIFICATIONS.map((notif) => (
+              {NOTIFICATIONS.map((notif: Notification) => (
                 <div key={notif.id} className="relative">
                   {/* UNREAD GLOW ANCHOR */}
                   {notif.isUnread && (

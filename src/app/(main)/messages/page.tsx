@@ -10,13 +10,23 @@ import {
   LayoutGrid,
   List,
   MoreVertical,
-  X,
   ArrowUpRight,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
+
+type Chat = {
+  id: string;
+  name: string;
+  msg: string;
+  time: string;
+  online: boolean;
+  unread: number;
+  category: string;
+  color: string;
+};
 
 const INITIAL_CHATS = [
   {
@@ -278,7 +288,17 @@ export default function ChatListPage() {
   );
 }
 
-function ChatCard({ chat, viewMode, isFeatured, onOpenOptions }: any) {
+function ChatCard({
+  chat,
+  viewMode,
+  isFeatured,
+  onOpenOptions,
+}: {
+  chat: Chat;
+  viewMode: "grid" | "list";
+  isFeatured: boolean;
+  onOpenOptions: () => void;
+}) {
   const isGrid = viewMode === "grid";
 
   return (
