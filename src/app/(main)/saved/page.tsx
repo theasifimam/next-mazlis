@@ -1,62 +1,61 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Bookmark } from "lucide-react";
-
+import { Bookmark, Terminal, ArrowUpRight, Zap } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
-const SAVED_CATEGORIES = [
-  "All",
-  "Design",
-  "Tech",
-  "Inspiration",
-  "Videos",
-  "Articles",
-];
+const SAVED_CATEGORIES = ["All", "Design", "Tech", "Videos", "Inspo"];
 
 const SAVED_POSTS = [
   {
     id: 1,
-    type: "image",
+    type: "IMG",
     title: "Minimalist Setup",
-    author: "@alex_design",
+    author: "@alex",
     img: "https://picsum.photos/seed/save1/600/800",
+    size: "tall",
   },
   {
     id: 2,
-    type: "article",
-    title: "The Future of AI in UI",
-    author: "@tech_insights",
+    type: "DOC",
+    title: "AI in UI",
+    author: "@tech",
     img: "https://picsum.photos/seed/save2/600/400",
+    size: "wide",
   },
   {
     id: 3,
-    type: "image",
-    title: "Glassmorphism Guide",
-    author: "@nexus_team",
-    img: "https://picsum.photos/seed/save3/600/900",
+    type: "IMG",
+    title: "Glassmorphism",
+    author: "@nexus",
+    img: "https://picsum.photos/seed/save3/600/600",
+    size: "small",
   },
   {
     id: 4,
-    type: "image",
-    title: "Cyberpunk Aesthetic",
-    author: "@neon_vibes",
-    img: "https://picsum.photos/seed/save4/600/700",
+    type: "VID",
+    title: "NextJS 15",
+    author: "@dev",
+    img: "https://picsum.photos/seed/save5/600/500",
+    size: "small",
   },
   {
     id: 5,
-    type: "video",
-    title: "NextJS 15 Tutorial",
-    author: "@dev_mode",
-    img: "https://picsum.photos/seed/save5/600/500",
+    type: "IMG",
+    title: "Cyber Protocol",
+    author: "@neon",
+    img: "https://picsum.photos/seed/save8/600/900",
+    size: "tall",
   },
   {
     id: 6,
-    type: "image",
-    title: "Typography Trends",
-    author: "@font_master",
-    img: "https://picsum.photos/seed/save6/600/850",
+    type: "IMG",
+    title: "Design Systems",
+    author: "@core",
+    img: "https://picsum.photos/seed/save9/600/600",
+    size: "small",
   },
 ];
 
@@ -64,38 +63,29 @@ export default function SavedPostsPage() {
   const [activeTab, setActiveTab] = useState("All");
 
   return (
-    // Added overflow-hidden to prevent horizontal scroll
-    <div className="flex flex-col h-screen w-full bg-background transition-colors duration-300 overflow-hidden">
-      {/* 1. Header Section - flex-none ensures it doesn't shrink or grow */}
-      <header className="flex-none p-6 md:p-10 pb-6 space-y-8">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-5">
-            <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
-              <Bookmark size={28} fill="currentColor" />
-            </div>
-            <div>
-              <h1 className="text-4xl font-black tracking-tight text-foreground">
-                Saved Posts
-              </h1>
-              <p className="text-muted-foreground text-sm font-medium">
-                Your private collection of{" "}
-                <span className="text-primary">inspiration</span>
-              </p>
-            </div>
+    <div className="flex flex-col h-full w-full bg-white dark:bg-[#050505] overflow-hidden">
+      {/* 1. HEADER SECTION (Flush) */}
+      <header className="flex-none py-5 border-b border-gray-100 dark:border-white/5">
+        <div className="flex items-center gap-5 mb-8">
+          <div className="w-12 h-12 rounded-xl bg-black dark:bg-[#E2FF54] flex items-center justify-center text-[#E2FF54] dark:text-black shadow-lg">
+            <Bookmark size={24} fill="currentColor" />
           </div>
+          <h1 className="text-3xl font-black tracking-tighter uppercase italic leading-none text-black dark:text-white">
+            Vault<span className="opacity-20">.01</span>
+          </h1>
         </div>
 
-        {/* Categories Chip List */}
-        <div className="flex items-center gap-3 overflow-x-auto no-scrollbar pb-2">
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
           {SAVED_CATEGORIES.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveTab(cat)}
-              className={`px-6 py-2.5 rounded-2xl text-xs font-bold whitespace-nowrap border ${
+              className={cn(
+                "px-4 py-2 rounded-lg text-[9px] font-black tracking-widest uppercase transition-all border",
                 activeTab === cat
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "bg-card text-muted-foreground border-border"
-              }`}
+                  ? "bg-[#E2FF54] text-black border-[#E2FF54]"
+                  : "bg-transparent text-gray-400 border-gray-100 dark:border-white/5 hover:border-black dark:hover:border-white"
+              )}
             >
               {cat}
             </button>
@@ -103,39 +93,70 @@ export default function SavedPostsPage() {
         </div>
       </header>
 
-      {/* 2. Content Area - Using a native scroll div for better Masonry stability */}
-      <main className="flex-1 overflow-y-auto overflow-x-hidden px-6 md:px-10 custom-scrollbar">
-        {/* max-w-full and w-full prevent the right-side overflow */}
-        <div className="max-w-full w-full mx-auto">
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 pb-32">
-            {SAVED_POSTS.map((post) => (
-              <motion.div
-                key={post.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="relative group break-inside-avoid rounded-[2rem] overflow-hidden border border-border bg-card shadow-sm"
-              >
-                {/* Image Container */}
-                <div className="relative w-full">
-                  <Image
-                    src={post.img}
-                    alt={post.title}
-                    width={600}
-                    height={800}
-                    className="w-full h-auto object-cover"
-                  />
-                  {/* ... rest of your overlay code ... */}
+      {/* 2. DENSE BENTO GRID 
+          - grid-flow-dense: Tells CSS to fill gaps automatically.
+          - gap-0: Makes cards touch each other perfectly.
+      */}
+      <main className="flex-1 overflow-y-auto custom-scrollbar">
+        <div className="grid grid-cols-2 grid-flow-dense gap-4">
+          {SAVED_POSTS.map((post, idx) => (
+            <motion.div
+              key={post.id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: idx * 0.05 }}
+              className={cn(
+                "group relative overflow-hidden rounded-[40px] border-r border-b border-gray-100 dark:border-white/5 bg-gray-50 dark:bg-white/[0.02]",
+                post.size === "tall" && "row-span-2 min-h-[400px]",
+                post.size === "wide" && "col-span-2 min-h-[200px]",
+                post.size === "small" && "h-[200px]"
+              )}
+            >
+              {/* Media Layer */}
+              <div className="absolute inset-0 w-full h-full">
+                <Image
+                  src={post.img}
+                  alt={post.title}
+                  fill
+                  className="object-cover grayscale overflow-hidden rounded-[40px] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                />
+                {/* Visual Finish */}
+                <div className="absolute inset-0 bg-black/40 group-hover:bg-[#E2FF54]/80 transition-all duration-500" />
+              </div>
+
+              {/* Content Layer */}
+              <div className="relative h-full w-full p-6 flex flex-col justify-between z-10">
+                <div className="flex justify-between items-start opacity-0 group-hover:opacity-100 transition-all transform -translate-y-2 group-hover:translate-y-0">
+                  <div className="bg-black px-2 py-1 rounded text-[8px] font-black text-[#ADFF00] tracking-widest">
+                    {post.type}
+                  </div>
+                  <Zap size={14} className="text-black animate-pulse" />
                 </div>
 
-                {/* Text Content */}
-                <div className="p-6">
-                  <h3 className="font-bold text-foreground text-lg">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-1.5 opacity-60 group-hover:opacity-100">
+                    <Terminal
+                      size={10}
+                      className="text-[#ADFF00] group-hover:text-black"
+                    />
+                    <span className="text-[8px] font-bold text-white group-hover:text-black uppercase tracking-tighter">
+                      {post.author}
+                    </span>
+                  </div>
+                  <h3 className="font-black text-lg lg:text-xl tracking-tight text-white group-hover:text-black uppercase italic leading-none truncate">
                     {post.title}
                   </h3>
                 </div>
-              </motion.div>
-            ))}
-          </div>
+              </div>
+
+              {/* Hover Action Link */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-300">
+                <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center text-[#E2FF54] shadow-2xl">
+                  <ArrowUpRight size={24} strokeWidth={3} />
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </main>
     </div>

@@ -1,218 +1,203 @@
 "use client";
 
-import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState } from "react";
+import { AnimatePresence } from "framer-motion";
 import {
   Heart,
   UserPlus,
   MessageCircle,
   Zap,
-  MoreHorizontal,
   Bell,
-  Settings,
   CheckCheck,
+  ArrowUpRight,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 
-// 1. Precise Type Definitions
-type NotificationType = "like" | "follow" | "mention" | "zap";
-
-interface User {
-  name: string;
-  handle: string;
-  avatar: string;
-}
-
-interface NotificationData {
-  id: number;
-  type: NotificationType;
-  user: User;
-  content: string;
-  time: string;
-  isUnread: boolean;
-}
-
-// 2. Mock Data with Explicit Typing
-const NOTIFICATIONS: NotificationData[] = [
+const NOTIFICATIONS = [
   {
-    id: 1,
-    type: "like",
-    user: {
-      name: "Sarah Chen",
-      handle: "@schen_ui",
-      avatar: "https://i.pravatar.cc/150?u=sarah",
-    },
-    content: "liked your post: 'The Future of Spatial UI Design'",
-    time: "2m ago",
-    isUnread: true,
-  },
-  {
-    id: 2,
-    type: "follow",
-    user: {
-      name: "Marcus Wright",
-      handle: "@mwright",
-      avatar: "https://i.pravatar.cc/150?u=marcus",
-    },
-    content: "started following you",
-    time: "15m ago",
-    isUnread: true,
-  },
-  {
-    id: 3,
+    id: "1",
     type: "mention",
     user: {
-      name: "John Doe",
-      handle: "@johndoe",
-      avatar: "https://i.pravatar.cc/150?u=johndoe",
+      name: "Vitalik",
+      handle: "@v.eth",
+      avatar: "https://i.pravatar.cc/150?u=vitalik",
     },
-    content:
-      "Mentioned you in a comment: 'The Future of Spatial UI Design' by @schen_ui",
-    time: "1h ago",
-    isUnread: false,
+    content: 'linked your soul_id in the "Neural Mesh" research thread.',
+    time: "2m",
+    isUnread: true,
+    reference: "The scalability of decentralized registries relies on...",
   },
   {
-    id: 4,
+    id: "2",
     type: "zap",
     user: {
-      name: "Jane Doe",
-      handle: "@janedoe",
-      avatar: "https://i.pravatar.cc/150?u=janedoe",
+      name: "Elena",
+      handle: "@elena_x",
+      avatar: "https://i.pravatar.cc/150?u=elena",
     },
-    content: "Zapped you: 'The Future of Spatial UI Design' by @schen_ui",
-    time: "2h ago",
-    isUnread: false,
+    content: "transmitted 1.2k Zaps to your recent archive.",
+    time: "15m",
+    isUnread: true,
+    reference: "The scalability of decentralized registries relies on...",
   },
   {
-    id: 5,
-    type: "like",
+    id: "3",
+    type: "follow",
     user: {
-      name: "Sarah Chen",
-      handle: "@schen_ui",
-      avatar: "https://i.pravatar.cc/150?u=sarah",
+      name: "Alex",
+      handle: "@alx",
+      avatar: "https://i.pravatar.cc/150?u=alex",
     },
-    content: "liked your post: 'The Future of Spatial UI Design'",
-    time: "2m ago",
-    isUnread: true,
+    content: "is now monitoring your registry updates.",
+    time: "1h",
+    isUnread: false,
+    reference: "The scalability of decentralized registries relies on...",
   },
 ];
 
-export default function NotificationPage(): React.ReactElement {
-  return (
-    <div className="flex flex-col h-full w-full bg-background transition-colors duration-300">
-      <header className="flex-none sticky top-0 z-50 p-4 bg-background/60 backdrop-blur-xl border-b border-border">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-2">
-            <div className="p-2 bg-primary/10 rounded-xl">
-              <Bell className="text-primary" size={20} />
-            </div>
-            <h1 className="text-2xl font-black tracking-tight italic text-primary">
-              Notifications
-            </h1>
-          </div>
-          <div className="flex items-center gap-2">
-            <button className="p-2.5 hover:bg-secondary rounded-xl transition-colors text-muted-foreground group">
-              <CheckCheck size={20} className="group-hover:text-primary" />
-            </button>
-            <button className="p-2.5 hover:bg-secondary rounded-xl transition-colors text-muted-foreground">
-              <Settings size={20} />
-            </button>
-          </div>
-        </div>
+export default function NotificationPage() {
+  const [scrolled, setScrolled] = useState(false);
 
-        <Tabs defaultValue="all" className="w-full">
-          <TabsList className="w-full justify-start bg-transparent h-auto p-0 gap-8">
-            {["All", "Mentions", "Verified"].map((tab) => (
-              <TabsTrigger
-                key={tab}
-                value={tab.toLowerCase()}
-                className="bg-transparent p-3 rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:text-foreground text-muted-foreground font-black text-xs uppercase tracking-widest transition-all"
-              >
-                {tab}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-        </Tabs>
+  return (
+    <div className="flex flex-col h-full w-full scrollbar-hide overflow-y-auto bg-white dark:bg-[#050505] text-black dark:text-white selection:bg-[#E2FF54]">
+      {/* 1. STICKY NAV (Matches Explore/Feed blur) */}
+      <header
+        className={cn(
+          "fixed top-0 left-0 right-0 z-[100] h-16 transition-all duration-500",
+          scrolled
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 -translate-y-4 pointer-events-none"
+        )}
+      >
+        <div className="absolute inset-0 bg-white/80 dark:bg-black/80 backdrop-blur-2xl border-b border-gray-100 dark:border-white/5" />
+        <div className="relative flex items-center justify-between px-8 h-full max-w-2xl mx-auto">
+          <span className="text-[10px] font-black tracking-[0.3em] uppercase opacity-80">
+            NOTICES — PROTOCOL_v1
+          </span>
+          <CheckCheck size={16} className="text-[#ADFF00] cursor-pointer" />
+        </div>
       </header>
 
-      <ScrollArea className="flex-1">
-        <div className="flex flex-col">
-          <AnimatePresence initial={false}>
-            {NOTIFICATIONS.map((notif) => (
-              <NotificationItem key={notif.id} notif={notif} />
-            ))}
-          </AnimatePresence>
+      <ScrollArea
+        onScrollCapture={(e) => setScrolled(e.currentTarget.scrollTop > 60)}
+        className="flex-1 w-full scrollbar-hide"
+      >
+        <div className="max-w-2xl mx-auto px-6 pb-24">
+          {/* 2. PAGE TITLE (The Editorial Hero) */}
+          <section className="mt-12 mb-10">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-12 h-12 bg-black dark:bg-[#E2FF54] rounded-2xl flex items-center justify-center shadow-xl shadow-black/10">
+                <Bell size={22} className="text-[#E2FF54] dark:text-black" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-lg font-black leading-tight tracking-tight uppercase">
+                  MAZLIS
+                </span>
+                <span className="text-[9px] font-bold text-gray-400 tracking-[0.2em] uppercase">
+                  NOTIFICATIONS_LOG
+                </span>
+              </div>
+            </div>
+
+            <h1 className="text-[58px] font-black leading-[0.85] tracking-tighter italic uppercase">
+              System
+              <br />
+              Notices.
+            </h1>
+          </section>
+
+          {/* 3. NOTIFICATION CARDS (Bento Style) */}
+          <section className="space-y-4">
+            <AnimatePresence>
+              {NOTIFICATIONS.map((notif) => (
+                <div key={notif.id} className="relative">
+                  {/* UNREAD GLOW ANCHOR */}
+                  {notif.isUnread && (
+                    <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-1 h-12 bg-[#E2FF54] rounded-full shadow-[0_0_15px_#E2FF54] z-10" />
+                  )}
+
+                  <div
+                    className={cn(
+                      "group flex flex-col gap-5 p-8 rounded-[40px] transition-all duration-500 cursor-pointer",
+                      notif.isUnread
+                        ? "bg-[#F9FAFB] dark:bg-[#0D0D0D] shadow-2xl shadow-black/[0.02]"
+                        : "opacity-40 grayscale-[0.8] hover:opacity-100 hover:grayscale-0 hover:bg-gray-50 dark:hover:bg-white/5"
+                    )}
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-center gap-4">
+                        <Avatar className="h-14 w-14 rounded-2xl">
+                          <AvatarImage src={notif.user.avatar} />
+                          <AvatarFallback className="bg-black text-[#E2FF54] font-black italic">
+                            {notif.user.name[0]}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="flex flex-col">
+                          <span className="font-black text-[13px] tracking-tight group-hover:text-[#ADFF00] transition-colors uppercase">
+                            {notif.user.name}
+                          </span>
+                          <span className="text-[10px] font-bold text-gray-400 tracking-widest uppercase opacity-60">
+                            {notif.user.handle}
+                          </span>
+                        </div>
+                      </div>
+                      <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">
+                        {notif.time}
+                      </span>
+                    </div>
+
+                    <div className="flex gap-4">
+                      {/* TYPE ICON INDICATOR */}
+                      <div
+                        className={cn(
+                          "w-10 h-10 shrink-0 rounded-xl flex items-center justify-center",
+                          notif.type === "mention"
+                            ? "bg-[#ADFF00] text-black"
+                            : "bg-white dark:bg-black shadow-sm"
+                        )}
+                      >
+                        <NotificationIcon type={notif.type} />
+                      </div>
+
+                      <p className="text-lg leading-tight font-bold tracking-tight text-gray-800 dark:text-gray-200">
+                        {notif.content}
+                      </p>
+                    </div>
+
+                    {/* MENTION-SPECIFIC PREVIEW (Differentiates Mentions) */}
+                    {notif.type === "mention" && notif.reference && (
+                      <div className="mt-2 ml-14 p-5 bg-white dark:bg-black/40 rounded-[24px] border-l-4 border-[#ADFF00] shadow-sm">
+                        <p className="text-sm text-gray-400 italic font-medium line-clamp-2">
+                          &quot;{notif.reference}&quot;
+                        </p>
+                        <div className="mt-3 flex items-center gap-2 text-[#ADFF00] text-[10px] font-black tracking-widest uppercase">
+                          View Reference <ArrowUpRight size={12} />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </AnimatePresence>
+          </section>
         </div>
-        <div className="h-24 w-full" />
       </ScrollArea>
     </div>
   );
 }
 
-// 3. Sub-component Props Interface
-interface NotificationItemProps {
-  notif: NotificationData;
-}
-
-function NotificationItem({
-  notif,
-}: NotificationItemProps): React.ReactElement {
-  // Use React.ReactNode for the icon lookup to avoid strict Lucide component type issues
-  const icons: Record<NotificationType, React.ReactNode> = {
-    like: <Heart size={16} className="fill-rose-500 text-rose-500" />,
-    follow: <UserPlus size={16} className="text-blue-500" />,
-    mention: <MessageCircle size={16} className="text-emerald-500" />,
-    zap: <Zap size={16} className="fill-amber-500 text-amber-500" />,
-  };
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: -10 }}
-      animate={{ opacity: 1, x: 0 }}
-      className={cn(
-        "group relative flex gap-4 p-5 border-b border-border/50 hover:bg-secondary/30 transition-all cursor-pointer",
-        notif.isUnread && "bg-primary/5 border-l-4 border-l-primary"
-      )}
-    >
-      <div className="flex-none pt-1">
-        <div className="relative">
-          <Avatar className="h-12 w-12 rounded-2xl border border-border shadow-sm">
-            <AvatarImage src={notif.user.avatar} alt={notif.user.name} />
-            <AvatarFallback className="bg-secondary font-bold text-xs text-foreground">
-              {notif.user.name.charAt(0)}
-            </AvatarFallback>
-          </Avatar>
-          <div className="absolute -bottom-1 -right-1 p-1 bg-background border border-border rounded-lg shadow-sm">
-            {icons[notif.type]}
-          </div>
-        </div>
-      </div>
-
-      <div className="flex-1 space-y-1 overflow-hidden">
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-1.5 overflow-hidden">
-            <span className="font-black text-sm text-foreground truncate">
-              {notif.user.name}
-            </span>
-            <span className="text-muted-foreground text-xs truncate">
-              {notif.user.handle}
-            </span>
-          </div>
-          <span className="flex-none text-[10px] font-black text-muted-foreground uppercase tracking-tight">
-            {notif.time}
-          </span>
-        </div>
-        <p className="text-sm text-muted-foreground leading-relaxed font-medium">
-          {notif.content}
-        </p>
-      </div>
-
-      <button className="opacity-0 group-hover:opacity-100 p-2 hover:bg-background rounded-xl transition-all h-fit self-center">
-        <MoreHorizontal size={16} className="text-muted-foreground" />
-      </button>
-    </motion.div>
-  );
+function NotificationIcon({ type }: { type: string }) {
+  const size = 18;
+  switch (type) {
+    case "zap":
+      return <Zap size={size} className="fill-[#E2FF54] text-[#E2FF54]" />;
+    case "mention":
+      return <MessageCircle size={size} />;
+    case "follow":
+      return <UserPlus size={size} className="text-blue-500" />;
+    default:
+      return <Heart size={size} />;
+  }
 }

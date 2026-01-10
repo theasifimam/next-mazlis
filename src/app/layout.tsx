@@ -24,11 +24,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange // Prevents a flash of unstyled content during theme changes
         >
-          {/* The min-h-screen and bg-background are CRITICAL. 
-              Without these, when you switch to light mode, 
-              the parts of the page without content might stay dark.
-          */}
-          <div className="relative min-h-screen bg-background text-foreground transition-colors duration-300">
+          <div className="relative w-screen dark:bg-black bg-white min-h-screen text-foreground transition-colors duration-300">
             {children}
           </div>
         </ThemeProvider>
